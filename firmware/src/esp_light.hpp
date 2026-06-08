@@ -1,12 +1,15 @@
 #pragma once
 
 #include <Arduino.h>
+#include <vector>
 
 // RGB colour array structure
 struct RGB {float r, g, b;};
-// lerp function of RGB structure between two colours a and b (rgb values treated as vectors)
+
 RGB lerp(const RGB& a, const RGB& b, float t);
 
+// Produces a smooth cycle through three colours in `steps` evenly-spaced steps.
+std::vector<RGB> generate_fade(const RGB& c1, const RGB& c2, const RGB& c3, int steps);
 
 class ESPLight {
 private:

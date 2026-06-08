@@ -1,11 +1,20 @@
 #include "esp_light.hpp"
 
+RGB lerp(const RGB& a, const RGB& b, float t) {
+    return {a.r + (b.r - a.r) * t, a.g + (b.g - a.g) * t, a.b + (b.b - a.b) * t};
+}
 
-RGB lerp(const RGB& a, const RGB& b, float t){return { a.r + (b.r - a.r) * t, a.g + (b.g - a.g) * t, a.b + (b.b - a.b) * t };}
-
-RGB red = {1.0f, 0.0f, 0.0f};
-RGB green = {0.0f, 1.0f, 0.0f};
-RGB blue = {0.0f, 0.0f, 1.0f};
+std::vector<RGB> generate_fade(const RGB& c1, const RGB& c2, const RGB& c3, int steps) {
+    std::vector<RGB> out;
+    out.reserve(steps);
+    for (int i = 0; i < steps; i++) {
+        float t = float(i) / (steps - 1);
+        if      (t < 0.33f) out.push_back(lerp(c1, c2, t / 0.33f));
+        else if (t < 0.66f) out.push_back(lerp(c2, c3, (t - 0.33f) / 0.33f));
+        else                out.push_back(lerp(c3, c1, (t - 0.66f) / 0.34f));
+    }
+    return out;
+}
 
 ESPLight::ESPLight(uint8_t red_pin, uint8_t green_pin, uint8_t blue_pin, bool esp_light){
   this->red_pin = red_pin;

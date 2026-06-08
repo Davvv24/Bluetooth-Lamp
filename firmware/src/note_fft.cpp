@@ -72,26 +72,26 @@ namespace FFT
         return arr; // TODO: sort out memory allocation
     }
 
-    complex<double>* fft_better(complex<double>* arr, complex<double>* arr2, int n_samples);
+    // complex<double>* fft_better(complex<double>* arr, complex<double>* arr2, int n_samples);
 
-    complex<double>* _fft_better(complex<double>* arr, complex<double>* arr2, int n_samples)
-    {
-        int half_n = n_samples / 2;
-        if (n_samples == 1) { return arr; } // End condition for recursion
-        com_d n = com_d(n_samples);
-        com_d factor;
+    // complex<double>* _fft_better(complex<double>* arr, complex<double>* arr2, int n_samples)
+    // {
+    //     int half_n = n_samples / 2;
+    //     if (n_samples == 1) { return arr; } // End condition for recursion
+    //     com_d n = com_d(n_samples);
+    //     com_d factor;
 
 
-        for (int k = 0; k < half_n; k++) {
-            factor = exp(com_d(k) * n_2pi_i / n) * y_o[k]; // e^(-2PI*i*k/N) * odd-array value
-            arr[k] = y_e[k] + factor;
-            arr[k + half_n] = y_e[k] - factor;
-        }
+    //     for (int k = 0; k < half_n; k++) {
+    //         factor = exp(com_d(k) * n_2pi_i / n) * y_o[k]; // e^(-2PI*i*k/N) * odd-array value
+    //         arr[k] = y_e[k] + factor;
+    //         arr[k + half_n] = y_e[k] - factor;
+    //     }
 
-        free(y_o);
-        free(y_e);
-        return arr; // TODO: sort out memory allocation
-    }
+    //     free(y_o);
+    //     free(y_e);
+    //     return arr; // TODO: sort out memory allocation
+    // }
 
     // Returns pointer to a new array of magnitude values from a passed array of complex numbers.
     double* complex_magnitude(complex<double>* arr, int n_samples)
